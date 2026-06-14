@@ -58,6 +58,20 @@ const MealItem = () => {
     0
   );
 
+  const deleteMeal = async (id: string) => {
+    try {
+      await axiosApi.delete(`/meals/${id}.json`);
+
+      setMeals((prev) =>
+        prev.filter((meal) => meal.id !== id)
+      );
+
+      toast.success('Meal deleted');
+    } catch {
+      toast.error('Failed to delete meal');
+    }
+  };
+
   if (loading) {
     return (
       <div className="text-center mt-5">
@@ -68,9 +82,22 @@ const MealItem = () => {
 
   if (meals.length === 0) {
     return (
+      <div className="text-center">
       <h4 className="text-center mt-5">
         No meals yet
       </h4>
+        <NavLink
+          to="/meals/new"
+          className="nav-link-reset"
+        >
+          <Button
+            size="lg"
+            className="px-4 shadow add-meal-btn"
+          >
+            + Add Meal
+          </Button>
+        </NavLink>
+      </div>
     );
   }
 
@@ -149,16 +176,19 @@ const MealItem = () => {
               </div>
 
               <div className="d-flex gap-2">
-                <Button
-                  variant="outline-primary"
-                  className="rounded-circle action-btn"
-                >
-                  <PencilSquare size={18} />
-                </Button>
+                <NavLink to={`/meals/${meal.id}/edit`}>
+                  <Button
+                    variant="outline-primary"
+                    className="rounded-circle action-btn"
+                  >
+                    <PencilSquare size={18} />
+                  </Button>
+                </NavLink>
 
                 <Button
                   variant="outline-danger"
                   className="rounded-circle action-btn"
+                  onClick={() => deleteMeal(meal.id)}
                 >
                   <TrashFill size={18} />
                 </Button>
