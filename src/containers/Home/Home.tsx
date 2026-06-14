@@ -1,8 +1,10 @@
+import MealItem from "../../components/MealItem/MealItem.tsx";
+
 const Home = () => {
   return (
-    <h1>
-      home
-    </h1>
+    <>
+      <MealItem/>
+    </>
   );
 };
 

@@ -14,3 +14,7 @@ body,
 .content {
   flex: 1;
 }
+
+body{
+  background-color: #e0bd9f;
+}

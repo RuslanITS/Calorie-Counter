@@ -17,8 +17,8 @@ const App = () => {
         <Container className="py-4">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/newmeal" element={<NewMeal />} />
-            <Route path="/editmeal" element={<EditMeal />} />
+            <Route path="/meals/new" element={<NewMeal />} />
+            <Route path="/meals/:id/edit" element={<EditMeal />} />
           </Routes>
         </Container>
       </main>

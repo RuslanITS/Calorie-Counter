@@ -1,0 +1,51 @@
+.meals-wrapper {
+  max-width: 900px;
+}
+
+.calories-card {
+  border-radius: 24px;
+  background: linear-gradient(135deg, #212529 0%, #343a40 100%);
+}
+
+.fire-circle {
+  width: 90px;
+  height: 90px;
+  font-size: 40px;
+  background: linear-gradient(135deg, #fd7e14 0%, #dc3545 100%);
+}
+
+.add-meal-btn {
+  border-radius: 999px;
+}
+
+.meal-card {
+  border-radius: 20px;
+  transition: all 0.2s ease;
+}
+
+.meal-card:hover {
+  transform: translateY(-3px);
+}
+
+.meal-badge {
+  padding: 8px 14px;
+}
+
+.calories-text {
+  color: #198754;
+  font-size: 1.2rem;
+}
+
+.action-btn {
+  width: 50px;
+  height: 50px;
+}
+
+.nav-link-reset {
+  text-decoration: none;
+}
+
+.empty-state {
+  margin-top: 100px;
+  text-align: center;
+}

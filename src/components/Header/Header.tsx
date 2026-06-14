@@ -1,5 +1,5 @@
 import { Container, Nav, Navbar } from "react-bootstrap";
-import { Basket2Fill, Shop, InfoCircleFill, EnvelopeFill } from "react-bootstrap-icons";
+import { Basket2Fill, Shop, InfoCircleFill } from "react-bootstrap-icons";
 import { NavLink } from "react-router-dom";
 
 const Header = () => {
@@ -30,20 +30,11 @@ const Header = () => {
           </Nav.Link>
           <Nav.Link
             as={NavLink}
-            to="/newmeal"
+            to="/meals/new"
             className="d-flex align-items-center gap-2"
           >
             <InfoCircleFill />
             NewMeal
-          </Nav.Link>
-
-          <Nav.Link
-            as={NavLink}
-            to="/editmeal"
-            className="d-flex align-items-center gap-2"
-          >
-            <EnvelopeFill />
-            EditMeal
           </Nav.Link>
         </Nav>
       </Container>
