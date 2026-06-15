@@ -21,6 +21,7 @@ const EditMeal = () => {
           mealTime: response.data.mealTime,
           description: response.data.description,
           calories: response.data.calories.toString(),
+          date: response.data.date,
         });
       } catch {
         toast.error("Failed to load meal");

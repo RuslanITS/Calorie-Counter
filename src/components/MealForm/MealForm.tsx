@@ -16,6 +16,7 @@ const MealForm = ({onSubmit, existingMeal,}: Props) => {
       mealTime: "Breakfast",
       description: "",
       calories: "",
+      date: new Date().toISOString().split('T')[0],
     },
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -50,6 +51,7 @@ const MealForm = ({onSubmit, existingMeal,}: Props) => {
     if (
       meal.description.trim() === ""
       || meal.calories.trim() === ""
+      || Number(meal.calories) <= 0
     ) {
       return;
     }
@@ -77,6 +79,17 @@ const MealForm = ({onSubmit, existingMeal,}: Props) => {
               <Form.Label>
                 Meal Time
               </Form.Label>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Date</Form.Label>
+
+                <Form.Control
+                  type="date"
+                  name="date"
+                  value={meal.date}
+                  onChange={inputChangeHandler}
+                />
+              </Form.Group>
 
               <Form.Select
                 className="form-input"

@@ -7,7 +7,7 @@ const Footer = () => {
       <Container className="text-center">
         <p className="mb-1">
           <Shop className="me-2" />
-          Brand Name
+          Calorie Counter
         </p>
 
         <small className="text-secondary">

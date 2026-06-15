@@ -12,11 +12,13 @@ export interface Meal {
   mealTime: string;
   description: string;
   calories: number;
+  date: string;
 }
 
 const MealItem = () => {
   const [meals, setMeals] = useState<Meal[]>([]);
   const [loading, setLoading] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const fetchMeals = async () => {
     try {
@@ -29,10 +31,16 @@ const MealItem = () => {
         return;
       }
 
-      const postMeal = Object.keys(response.data).map((id) => ({
+      const postMeal: Meal[] = Object.keys(response.data).map((id) => ({
         id,
         ...response.data[id],
       }));
+
+      postMeal.sort(
+        (a, b) =>
+          new Date(b.date).getTime() -
+          new Date(a.date).getTime(),
+      );
 
       setMeals(postMeal);
     } catch {
@@ -52,23 +60,31 @@ const MealItem = () => {
     });
   }, []);
 
-  const totalCalories = meals.reduce(
-    (acc, meal) =>
-      acc + meal.calories,
-    0
-  );
+  const today = new Date()
+    .toISOString()
+    .split("T")[0];
+
+  const totalCalories = meals
+    .filter((meal) => meal.date === today)
+    .reduce(
+      (acc, meal) =>
+        acc + meal.calories,
+      0
+    );
 
   const deleteMeal = async (id: string) => {
     try {
+      setDeletingId(id);
+
       await axiosApi.delete(`/meals/${id}.json`);
 
-      setMeals((prev) =>
-        prev.filter((meal) => meal.id !== id)
-      );
+      toast.success("Meal deleted");
 
-      toast.success('Meal deleted');
+      await fetchMeals();
     } catch {
-      toast.error('Failed to delete meal');
+      toast.error("Failed to delete meal");
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -113,6 +129,9 @@ const MealItem = () => {
 
               <h1 className="fw-bold mb-0">
                 {totalCalories}
+                <small className="ms-2 fs-6 fw-normal">
+                  kcal
+                </small>
               </h1>
 
               <small className="opacity-75">
@@ -166,6 +185,10 @@ const MealItem = () => {
                   {meal.mealTime}
                 </Badge>
 
+                <div className="text-muted small mb-2">
+                  📅 {new Date(meal.date).toLocaleDateString("ru-RU")}
+                </div>
+
                 <h4 className="fw-bold mb-2">
                   {meal.description}
                 </h4>
@@ -189,8 +212,16 @@ const MealItem = () => {
                   variant="outline-danger"
                   className="rounded-circle action-btn"
                   onClick={() => deleteMeal(meal.id)}
+                  disabled={deletingId === meal.id}
                 >
-                  <TrashFill size={18} />
+                  {deletingId === meal.id ? (
+                    <Spinner
+                      animation="border"
+                      size="sm"
+                    />
+                  ) : (
+                    <TrashFill size={18} />
+                  )}
                 </Button>
               </div>
             </div>
